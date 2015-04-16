@@ -4,14 +4,9 @@ layout: default
 name: "GentleR"
 ---
 
-# Title
+# GentleR
 
 
-```{r}
-install.packages(c("httr"))
-```
-
-Page content. *Bold*. `x=1`. **thing**
-
-
+- 2015-04-16: [GAM diagnostics](12-12-2012/gam_fitting_and_diagnostics.pdf)
+- no date: Rmarkdown test [HTML](rmdtest/rmdtest.html) [Rmd](rmdtest/rmdtest.Rmd)
 
