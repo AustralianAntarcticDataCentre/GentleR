@@ -3,6 +3,7 @@ title: Title here
 layout: post
 ---
 
+
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
@@ -17,13 +18,11 @@ layout: post
   <body>
     <section class="page-header">
       <h1 class="project-name">GentleR</h1>
-      <h2 class="project-tagline">GentleR</h2>
-      <a href="https://github.com/AustralianAntarcticDataCentre/GentleR" class="btn">View on GitHub</a>
-      <a href="https://github.com/AustralianAntarcticDataCentre/GentleR/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/AustralianAntarcticDataCentre/GentleR/tarball/master" class="btn">Download .tar.gz</a>
+      <h2 class="project-tagline">About GentleR</h2>
     </section>
 
-    <section class="main-content">
+
+  <section class="main-content">
 
 
 # Title
@@ -36,7 +35,7 @@ install.packages(c("httr"))
 Page content. *Bold*. `x=1`. /more/
 
 
-    </section>
+  </section>
 
   
   </body>
