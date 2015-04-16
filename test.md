@@ -11,7 +11,7 @@ name: "GentleR"
 install.packages(c("httr"))
 ```
 
-Page content. *Bold*. `x=1`. /more/
+Page content. *Bold*. `x=1`. **thing**
 
 
 
