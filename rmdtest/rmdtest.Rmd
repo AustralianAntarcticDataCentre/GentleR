@@ -1,0 +1,21 @@
+---
+title: "Title"
+author: "Ben Raymond <ben.raymond@aad.gov.au>"
+date: "April 2015"
+output:
+  html_document:
+    toc: false
+    theme: cosmo
+    highlight: zenburn
+---
+
+
+
+
+# Title
+
+Some text.
+
+```{r eval=TRUE,echo=TRUE,message=TRUE,warning=TRUE,tidy=FALSE,cache=FALSE,include=TRUE,dpi=72,fig.width=7,fig.height=7,results="markup"}
+plot(runif(10))
+```
