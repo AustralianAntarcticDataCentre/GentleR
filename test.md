@@ -1,6 +1,6 @@
 ---
 title: ""
-layout: post
+layout: default
 name: "GentleR"
 ---
 
