@@ -4,7 +4,7 @@ layout: default
 name: "GentleR"
 ---
 
-# GentleR
+# Discussion material by date
 
 
 - 2015-04-16: [GAM diagnostics](12-12-2012/gam_fitting_and_diagnostics.pdf)
