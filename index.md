@@ -4,6 +4,8 @@ layout: default
 name: "GentleR"
 ---
 
+# [About](about/about.rmd)
+
 # Discussion material by date
 
 
