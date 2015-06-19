@@ -1,8 +1,7 @@
 ---
 title: ""
-name: 
-author: "Ben Raymond <ben.raymond@aad.gov.au>"
-date: "April 2015"
+layout: default
+name: "About"
 ---
 
 # About GentleR 
