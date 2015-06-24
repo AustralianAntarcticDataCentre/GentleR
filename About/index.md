@@ -14,8 +14,6 @@ A few things to note:
 
 - meetings with formal topics are advertised on the AAD Quantitative email list, so ask to be added to that list  
 
-- the Hobart R Users Group may also be of interest [HRUG](http://www.meetup.com/hobart-r-users-group) 
-
 For more information contact John McKinlay e: <john.mckinlay@aad.gov.au> t: 6232 3622 
 
 ## [Home](http://australianantarcticdatacentre.github.io/GentleR/)

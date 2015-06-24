@@ -4,7 +4,7 @@ layout: default
 name: "GentleR"
 ---
 
-## [About](About/)
+## [About](About/)   [Links](Links/)
 
 # Discussion material by date
 
