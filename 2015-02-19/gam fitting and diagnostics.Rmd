@@ -1,0 +1,81 @@
+---
+title: "Gam fitting and diagnostics"
+author: "John McKinlay"
+date: "Tuesday, February 17, 2015"
+output: html_document
+---
+
+Simulate some data, fit a model. Fit a second model with >> k. Compare.
+
+```{r}
+# gam diagnostics
+
+library(mgcv)
+dat <- gamSim(1,n=200)
+head(dat)
+library(lattice)
+print(xyplot(f0~x0, data=dat), split=c(1,1,2,2), more=TRUE)
+print(xyplot(f1~x1, data=dat), split=c(2,1,2,2), more=TRUE)
+print(xyplot(f2~x2, data=dat), split=c(1,2,2,2), more=TRUE)
+print(xyplot(f3~x3, data=dat), split=c(2,2,2,2), more=FALSE)
+xyplot(y~x0+x1+x2+x3, data=dat, outer=TRUE, as.table=TRUE)
+
+b <- gam(y~s(x0)+s(x1)+s(x2)+s(x3), data=dat)
+b
+summary(b)
+plot(b, pages=1)
+gam.check(b, pch=19, cex=.3)
+
+b1 <- gam(y~s(x0, k=20)+s(x1, k=20)+s(x2, k=20)+s(x3, k=20), data=dat)
+b1
+summary(b1)
+plot(b1, pages=1)
+gam.check(b1, pch=19, cex=.3)
+
+anova(b, b1, test="F")
+AIC(b)
+AIC(b1)
+
+BIC(b)
+BIC(b1)
+
+
+
+
+```
+
+Simulate binomial data.
+
+```{r, echo=FALSE}
+
+## simulate binomial data...
+set.seed(0)
+n.samp <- 400
+dat <- gamSim(1,n=n.samp,dist="binary",scale=.33)
+p <- binomial()$linkinv(dat$f) ## binomial p
+n <- sample(c(1,3),n.samp,replace=TRUE) ## binomial n
+dat$y <- rbinom(n,n,p)
+dat$n <- n
+head(dat)
+xyplot(y/n~x0+x1+x2+x3, data=dat, outer=TRUE, as.table=TRUE)
+
+lr.fit <- gam(y/n~s(x0)+s(x1)+s(x2)+s(x3)
+              ,family=binomial,data=dat,weights=n,method="REML")
+plot(lr.fit, pages=1)
+gam.check(lr.fit, pch=19, cex=.3)
+
+par(mfrow=c(2,2))
+## normal QQ-plot of deviance residuals
+qqnorm(residuals(lr.fit),pch=19,cex=.3)
+## Quick QQ-plot of deviance residuals
+qq.gam(lr.fit,pch=19,cex=.3)
+## Simulation based QQ-plot with reference bands 
+qq.gam(lr.fit,rep=100,level=.9)
+## Simulation based QQ-plot, Pearson resids, all
+## simulated reference plots shown...  
+qq.gam(lr.fit,rep=100,level=1,type="pearson",pch=19,cex=.2)
+par(mfrow=c(1,1))
+
+```
+
+

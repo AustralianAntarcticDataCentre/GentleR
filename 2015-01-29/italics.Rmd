@@ -1,0 +1,221 @@
+---
+title: "Italics"
+author: "John McKinlay"
+date: "29 January 2015"
+output: pdf_document
+---
+
+This doc is inspired by a need for axis tick labels in *italics*, arrived at by the circuitous route of reading text files with long and/or unusual column headers, 'fixing' them, and creating expressions to capture variable units.
+
+
+## Make some data
+
+First, make a csv with unusual names.
+
+
+```{r}
+temp <- textConnection("
+col,  a _very_ _very_ long var name,   col, 99-01,  99-02,	12map
+1,                                A,    10, 	  1, 	    4,	  	z
+2,                               BB,    20,	    2,	    5,		  c
+3,                              CCC,    30,	    3,	    6,		  s")			
+		
+mdf <- read.csv(temp, 	
+		header=TRUE, 
+		strip.white=TRUE,
+		colClasses=c("integer", "character", "numeric", "numeric", "numeric", "character"))
+close(temp)
+mdf
+
+str(mdf)
+
+```
+
+Note that out-of-the-ordinary column names are simplified; this is controlled by the argument `check.names=TRUE` which fires function `make.names()` under the hood.
+
+## Fix the column names
+
+These names are perhaps not simplied enough. I prefer to work with short names, all lower case, no underscores and no dots. Here's a function for the job, noting that conversions fire sequentially in the order they are specified as arguments. 
+
+
+```{r}
+fixNames <- function(yuckNames, lower=TRUE, us2dot=TRUE, rmDot=TRUE, makeShort=TRUE, n=8) {
+  # Function to fix up names of an object. Takes a character vector and:
+	# - replace underscores with dots
+	# - remove dots (periods)
+	# - force to lower case 
+	# - truncate to n characters, make unique
+	# eg. fixNames(c("what___.A...PAIN", "..__FoR._.", "incoming..col_NAMES"))
+	if(class(yuckNames)!="character") stop("Designed to work on character strings only.")
+	fixedNames <- yuckNames
+	if(lower) fixedNames <- tolower(fixedNames)
+	if(us2dot) fixedNames <- chartr("_", ".", fixedNames)
+	if(rmDot) fixedNames <- gsub("\\.", "", fixedNames)
+	if(makeShort) fixedNames <- abbreviate(fixedNames, minlength=n)
+	return(fixedNames)
+}
+
+fixNames(names(mdf))
+
+
+as.data.frame(fixNames(names(mdf)))
+
+```
+
+Now imagine we have many columns, many of which have unreasonably wordy col names. How to deal shortening them (for programming purposes) and keeping track of what they are? 
+
+My approach is to create an auxilliary `data.frame` containing the truncated variable names (using `fixNames` above), full variable names, and expressions for use in labelling axes. You could add a description/note column if important.
+
+
+
+```{r}
+nvar <- ncol(mdf)
+  
+vn <- data.frame(
+	cn=1:ncol(mdf), 
+	xcn=paste(c(rep("",26), rep(LETTERS[1:((nvar%/%26))], each=26)), rep(LETTERS, (nvar%/%26)+1), sep="")[1:nvar], 
+	shortName=fixNames(names(mdf), n=6), 
+	oriName=names(mdf), 
+	stringsAsFactors=FALSE, row.names=NULL)
+
+vn
+names(mdf) <- fixNames(names(mdf))
+mdf
+```
+
+Column `xcn` (Excel column number) is slightly interesting: if your primary data 'viewer' is MS Excel, and you have an overwhelmning number of columns, it sometime useful to reference a column number to the A-Z system used by Excel. Note that `xcn` above is only defined up to `26 * 26 = 676` combinations (i.e. A through ZZ). 
+
+I might also define expressions as part of `vn` for the key variables, particularly those that require some kind of `plotmath` notation for units. More on expressions later, but note here that these are being stored in the `data.frame` as text, not as expressions.  
+
+```{r}
+vn$expre <- NA
+vn$expre[4]  <- 'expression({"Temperature ("}*degree*{"C)"})'
+vn$expre[5]  <- 'expression({"Speed (m."}*s^-1*{")"})'
+
+vn	
+
+```
+
+## Plots and labels
+
+Here we'll look at some of the anatomy of a plot in base graphics, adding our fancy axis labels. Most of the functionality to be discussed can be found in the help pages for `par`, `axis` and `plotmath`. We use  `eval(parse())` to turn our fancy labels from pure text to their R construct (`parse`), then their evaluated form `eval` for use by plot.  
+
+```{r}
+
+plot(x9902 ~ x9901, type=c('h'), xlab=eval(parse(text=vn$expre[4])), ylab=eval(parse(text=vn$expre[5])), data=mdf)
+
+```
+
+### Digression begin: eval and parse?
+
+There's been plenty of R-Help mail over the years about the undesirablity of using `parse()` constructs. 
+
+```{r}
+fortunes::fortune(106) # among several
+```
+The main reasons for this, I think, are three potential downsides:
+
+1. If others use your code, you don't know what they might pass in to `parse` (e.g. `text="format C:"`)
+2. Errors won't be picked up when code is sourced, only at runtime.
+3. It's slow.
+
+
+In this instance, I don't think these are terribly important and, anyway, I couldn't think of an easy way to pass in the expression without `eval(parse())`. 
+
+Examples of points ii) and iii) are:
+
+```{r eval = FALSE}
+f <- function() { # this will error on source
+  mean(1::5)
+}
+
+f <- function() { # this will only error at runtime
+  eval(parse(text = "1::5"))
+}
+
+```
+```{r}
+system.time(for(i in seq_len(1000)) mean(rnorm(i)))
+system.time(for(i in seq_len(1000)) eval(parse(text = "mean(rnorm(i))")))
+
+```
+### Digression end
+
+We saw on the previous plot that part of the y-axis label was outside the printable area because of the superscript. We can fix this by expanding the margin space on the LHS.   
+
+```{r}
+par("mar") # 4.1 not enough
+op <- par(mar=c(5.1,5.1,4.1,2.1))
+plot(x9902 ~ x9901, type=c('h'), xlab=eval(parse(text=vn$expre[4])), ylab=eval(parse(text=vn$expre[5])), data=mdf)
+par(op)
+
+```
+
+### Finally, italics 
+
+Base graphics allows you to create most high-level graphics by using a series of low-level calls that build constituent parts. Compare the following three plots:
+
+```{r}
+x <- 1:10
+y <- 1:10
+
+op <- par(mfrow=c(2,2))
+plot(y~x, type='h', main="Standard")
+
+plot(y ~ x, type='h', axes = FALSE, main="Axes (defaults) added")
+axis(1)
+axis(2)
+
+plot(y ~ x, type='h', axes = FALSE, main="Axes (custom) added") 
+axis(1, at=seq(1,10,1))
+axis(2, at=seq(1,10,1))
+box()
+par(op)
+```
+Some/many parameters described in `par()` can be provided to `plot`: for example, `xant` ('x axis type') lets us turn off just the x axis. Italics in axis labels is, in fact, relatively easy.
+
+```{r}
+
+plot(y ~ x, type=c('h'), xaxt = 'n')
+axis(1, at=1:10, labels=paste0(LETTERS[1:10], 1:10), font=3) 
+# 1 is plain text (default), 2 bold, 3 italic & 4 bold italic
+```
+Mixing italics and regular text is also straighforward, but you have to dive into `plotmath' to get there.
+
+```{r}
+exp1 <- expression("Measure (" %+-% " 0 SE)")
+exp3 <- c(expression({"Subscripts: "}*CO[2]), expression({"Superscripts: X"}^{-1}), expression({italic("Symbols")}*{": "}*mu*{"M"}))
+
+plot(y ~ x, type=c('h'), xaxt = 'n', ylab=exp1)
+axis(1, at=c(2,5,8), labels=exp3) 
+```
+Can we rotate the labels? Yes. `axis` will work for horizontal/vertical rotation.  
+
+```{r}
+op <- par(mar=c(8,3.1,2,2))
+plot(y ~ x, type=c('h'), xaxt = 'n', ylab=exp1, xlab="")
+axis(1, at=c(2,5,8), labels=exp3, las=3) # 3 = vertical
+par(op)
+```
+Annoyingly, for other arbitrary rotations you need to suppress the labels in `axis` and add them separately using `text`. 
+
+```{r}
+plot(y ~ x, type=c('h'), xaxt = 'n', ylab=exp1, xlab="")
+axis(1, at=c(2,5,8), labels=FALSE) 
+text(c(2,5,8), par("usr")[3] - 0.4, labels = exp3, srt = -15, adj = 0, xpd = TRUE) 
+# xpd=T clips to the figure region, not plot region
+par(op)
+```
+Lattice offers some relief but is still not perfect. 
+
+```{r}
+library(lattice)
+xyplot(y~x, type='h', xlab="", ylab=exp1, scales=list(x=list(at=c(2,5,8), labels=exp3, rot=15)))
+```
+
+Finally, I am no expert on `plotmath`. Most things I have gleaned over the years have been on a "need to know" basis - when I need to know it, I figure it out, usually from the `plotmat' demo.
+
+```{r}
+demo(plotmath)
+```
+
