@@ -5,7 +5,8 @@ name: "Weasel"
 ---
 
 # Weasel
-![The Least Weasel I could find](Mustela_nivalis_-British_Wildlife_Centre-4.jpg)
+The Least Weasel
+!(Mustela_nivalis_-British_Wildlife_Centre-4.jpg)
 [Source](https://en.wikipedia.org/wiki/Least_weasel#/media/File:Mustela_nivalis_-British_Wildlife_Centre-4.jpg)
 
 - Nothing is guaranteed to work 
