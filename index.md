@@ -8,7 +8,9 @@ name: "GentleR"
 
 # Discussion material by date
 
-- 2015-06-25: Video recording of Bayes Factor Workshop held 15-Jun-2015 in Hobart [link](2015-06-25/)
+- 2015-06-25: 
+  * Graticules for R (M.Sumner [html](2015-06-25/graticule_MDSumner_2015-06-25.html))
+  * Video recording of Bayes Factor Workshop held 15-Jun-2015 in Hobart [link](2015-06-25/)
 - 2015-05-07: AIC/BIC model selection (see [here](https://www.youtube.com/watch?v=lEDpZmq5rBw) for an insightful seminar by Mark Brewer, and [here2](http://onlinelibrary.wiley.com/doi/10.1111/j.1751-5823.2010.00108.x/abstract) and [here3](http://onlinelibrary.wiley.com/doi/10.1002/sim.5855/abstract) for some papers that might revolutionise your thinking on the matter)
 - 2015-04-16: Blue whale voyage, animation of sonobouy and call locations ([html](2015-04-09/bwvcalls.html))
 - 2015-02-19: Additive model fitting and diagnostics II ([pdf](2015-02-19/gam_fitting_and_diagnostics.pdf), [RMarkdown](2015-02-19/gam_fitting_and_diagnostics.Rmd))
