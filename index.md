@@ -8,6 +8,9 @@ name: "GentleR"
 
 # Discussion material by date
 
+- 2015-07-23:
+  * Choosing colours to accommodating colour-blindness ([pdf](2015-07-23/dichromat.pdf), [Rmd](2015-07-23/dichromat.Rmd))
+  * Pan and zoom - Yihui Xie's original post that spawned the whale application ([R-Dev link](http://tolstoy.newcastle.edu.au/R/e6/devel/09/02/0535.html))
 - 2015-06-25: 
   * Graticules for R (M.Sumner [html](2015-06-25/graticule_MDSumner_2015-06-25.html))
   * Video recording of Bayes Factor Workshop held 15-Jun-2015 in Hobart [link](2015-06-25/)

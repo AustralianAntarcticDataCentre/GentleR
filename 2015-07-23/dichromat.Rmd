@@ -1,0 +1,108 @@
+---
+title: "Colour choice in R - accommodating colour-blindness"
+author: "John McKinlay"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output: pdf_document
+---
+A comprehensive introduction to colour in R, including a section on colour-blindness, can be found here ([pdf](http://research.stowers-institute.org/efg/Report/UsingColorInR.pdf)). This document will focus on how to accommodate partial, dichromatic colour blindness when selecting colours for plots.
+
+[From Wikipedia:](https://en.wikipedia.org/wiki/Color_blindness)
+Protanopes, deuteranopes, and tritanopes are dichromats; that is, they can match any color they see with some mixture of just two primary colors (whereas normally humans are trichromats and require three primary colors). 
+
+* Protanopia (1% of males): Lacking the long-wavelength sensitive retinal cones, those with this condition are unable to distinguish between colors in the green-yellow-red section of the spectrum.
+* Deuteranopia (1% of males): Lacking the medium-wavelength cones, those affected are again unable to distinguish between colors in the green-yellow-red section of the spectrum.
+* Tritanomaly (equally rare for males and females, 0.01% for both): Having a mutated form of the short-wavelength (blue) pigment. The short-wavelength pigment is shifted towards the green area of the spectrum. 
+
+R package `dichromat` allows us to collapse red-green or green-blue distinctions to simulate the effects of different types of dichromacy.
+
+\newpage
+
+```{r}
+library(dichromat)
+op <- par(mfrow=c(2,2), mar=c(0,0,2,0))
+palette()
+barplot(rep(1,8), yaxt="n", col=1:8, main="True")
+barplot(rep(1,8), yaxt="n", col=dichromat(c(1:8), type="protan"), main="Protanopia")
+barplot(rep(1,8), yaxt="n", col=dichromat(c(1:8), type="deutan"), main="Deutanopia")
+barplot(rep(1,8), yaxt="n", col=dichromat(c(1:8), type="tritan"), main="Tritanopia")
+par(op)
+```
+\newpage
+
+The package provides 17 color schemes suitable for people with deficient or anomalous red-green vision. Here are six.
+
+```{r}
+# from ?colorschemes in package dichromat
+pal <- function(col, ...)
+  image(seq_along(col), 1, matrix(seq_along(col), ncol = 1),
+  col = col, axes = FALSE, ...)
+
+op <- par(mar = c(1, 2, 1, 1))
+layout(matrix(1:6, ncol = 1))
+pal(colorschemes$BrowntoBlue.10, main = "Brown to Blue (10)")
+pal(colorRampPalette(colorschemes$BrowntoBlue.10, space = "Lab")(100),
+  main = "Brown to Blue Ramp")
+pal(dichromat(colorschemes$BrowntoBlue.10),
+  main = "Brown to Blue (10) -- deuteranopia")
+pal(colorschemes$Categorical.12, main = "Categorical (12)")
+pal(dichromat(colorschemes$Categorical.12),
+  main = "Categorical (12) -- deuteranopia")
+pal(dichromat(colorschemes$Categorical.12, "protan"),
+  main = "Categorical (12) -- protanopia")
+par(op)
+
+```
+\newpage
+
+If you are an RColorBrewer-type person (an R package for generating perceptually distinct colour schemes), a restricted set of the RColourBrewer palettes are optimised for colour-blindness.
+
+Here is the entire palette, followed by the restricted set.
+
+```{r fig.width=8, fig.height=8}
+library(RColorBrewer)
+display.brewer.all(n=NULL, type="all", select=NULL, exact.n=TRUE, colorblindFriendly=FALSE)
+```
+
+\newpage
+
+The colour-blind friendly set.
+
+```{r fig.width=8, fig.height=8}
+display.brewer.all(n=NULL, type="all", select=NULL, exact.n=TRUE, colorblindFriendly=TRUE)
+
+```
+\newpage
+
+Colour palettes are used to create contiguous series of colour, often used for displaying surfaces of continuous variates. What do the different default palettes look like to different variations of dichromacy? First, define a function to display the volcano (topographic) data set taking palette as an argument. The function plots the data using the specified palette, as well as the three dichromatic adjustments to that palette.
+
+```{r fig.width=6, fig.height=4}
+plotPal <- function(pal) {
+  op <- par(mfrow=c(2,2), mar=c(0,0,2,0))
+  x <- 10*1:nrow(volcano)
+  y <- 10*1:ncol(volcano)
+  blank <- function(x1=x, y1=y) plot(c(min(x1), max(x1)), c(min(y1), max(y1)), axes=FALSE)
+  lvls <- seq(min(volcano), max(volcano), length.out=11)
+  blank()
+  .filled.contour(x, y, volcano, levels=lvls, col = pal(11)); title(deparse(substitute(pal)))
+  blank()
+  .filled.contour(x, y, volcano, levels=lvls, col = dichromat(pal(11))); title("Deuteranopia")
+  blank()
+  .filled.contour(x, y, volcano, levels=lvls, col = dichromat(pal(11))); title("Protanopia")
+  blank()
+  .filled.contour(x, y, volcano, levels=lvls, col = dichromat(pal(11))); title("Tritanopia")
+  par(op)
+  invisible()
+}
+plotPal(terrain.colors) 
+
+```
+\newpage
+
+```{r fig.width=6, fig.height=4}
+plotPal(rainbow)
+plotPal(heat.colors)
+plotPal(topo.colors)
+plotPal(cm.colors)
+```
+
+
