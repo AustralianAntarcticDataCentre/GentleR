@@ -7,6 +7,8 @@ name: "GentleR"
 ## [About](About/).....[Links](Links/).....[Weasel](Weasel/)
 
 # Discussion material by date
+- 2015-09-17
+  * Need to display high-dimensional data, spatially? Check out ?stars which can be plotted in x-y using the locations argument. Here's an example using 25-d species data and liberal use of alpha to highlight a single species. [example](2015-09-17/stars.jpg)
 - 2015-09-10
   * data.table: enhanced version of data.frame that allows blazing fast data manipulation. Some resources:  
   [CRAN](https://cran.r-project.org/web/packages/data.table/index.html), 
