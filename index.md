@@ -7,6 +7,15 @@ name: "GentleR"
 ## [About](About/).....[Links](Links/).....[Weasel](Weasel/)
 
 # Discussion material by date
+- 2016-02-11
+  * Discussion if image analysis wrt quantifying snow coverage.
+- 2016-02-04
+  * Discuss colorspace package and the choose_pallette() function - a swish GUI for viewing, manipulating and choosing HCL color palettes. Here's the [link](https://cran.r-project.org/web/packages/colorspace/index.html).
+  * Discuss length-weight relationships in animals; a good review paper can be found [here](http://onlinelibrary.wiley.com/doi/10.1111/j.1439-0426.2006.00805.x/abstract).  
+- 2016-01-28
+  * Discuss efficiency of random forests for small n and possibilities for combining results from several univariate forests. 
+- 2015-12-17
+  * Review of David Warton talk "The modernisation of multivariate analysis in ecology", given at the recent IBS-AR Conference. A copy of David's talk can be found [here](http://www.biometrics.org.au/conferences/Hobart2015/talks2015/Thursday/W_1050_Thu_DavidWarton.pptx).   
 - 2015-09-17
   * Need to display high-dimensional data, spatially? Check out ?stars which can be plotted in x-y using the locations argument. Here's an example using 25-d species data and liberal use of alpha to highlight a single species. [example](2015-09-17/stars.jpg)
 - 2015-09-10
