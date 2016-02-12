@@ -8,7 +8,7 @@ name: "GentleR"
 
 # Discussion material by date
 - 2016-02-11
-  * Discussion if image analysis wrt quantifying snow coverage.
+  * Discussion of image analysis wrt quantifying snow coverage.
 - 2016-02-04
   * Discuss colorspace package and the choose_pallette() function - a swish GUI for viewing, manipulating and choosing HCL color palettes. Here's the [link](https://cran.r-project.org/web/packages/colorspace/index.html).
   * Discuss length-weight relationships in animals; a good review paper can be found [here](http://onlinelibrary.wiley.com/doi/10.1111/j.1439-0426.2006.00805.x/abstract).  
