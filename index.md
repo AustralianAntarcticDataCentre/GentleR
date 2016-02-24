@@ -7,6 +7,8 @@ name: "GentleR"
 ## [About](About/).....[Links](Links/).....[Weasel](Weasel/)
 
 # Discussion material by date
+- 2016-02-18
+  * Presentation by Spoon on selecting suitable starting values for broken-stick regression in JAGS; discussion of Gelman's views on EDA, data snooping and hypothesis testing; discussion of conditional inference trees. 
 - 2016-02-11
   * Discussion of image analysis wrt quantifying snow coverage.
 - 2016-02-04
