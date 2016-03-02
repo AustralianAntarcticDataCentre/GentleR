@@ -7,6 +7,9 @@ name: "GentleR"
 ## [About](About/).....[Links](Links/).....[Weasel](Weasel/)
 
 # Discussion material by date
+- 2016-03-03
+  * Discussion of fitting multivariate binomial models to species presence/absence data (Aleks Terauds).  
+  * Discussion of the merits of linear and non-linear interpolation of dose-response relationships when data are insufficient to support logistic-type models (Abby Proctor).   
 - 2016-02-25
   * Discussion of sampling design for FOCE related work (James Black)
   * Continuing discussion of random forests (Jim Dell)
