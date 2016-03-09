@@ -7,6 +7,8 @@ name: "GentleR"
 ## [About](About/).....[Links](Links/).....[Weasel](Weasel/)
 
 # Discussion material by date
+- 2016-03-10
+  * The ASA's statement on p-values: context, process, and purpose [link](http://amstat.tandfonline.com/doi/abs/10.1080/00031305.2016.1154108). And don't forget the supplementary material that contains the individual views of the combatants.. um, I mean discussants.
 - 2016-03-03
   * Discussion of fitting multivariate binomial models to species presence/absence data (Aleks Terauds).  
   * Discussion of the merits of linear and non-linear interpolation of dose-response relationships when data are insufficient to support logistic-type models (Abby Proctor).   
