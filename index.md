@@ -7,6 +7,10 @@ name: "GentleR"
 ## [About](About/).....[Links](Links/).....[Weasel](Weasel/)
 
 # Discussion material by date
+- 2016-03-24
+  * More model selection debate, a little on conditional inference trees, and some discussion of whale feeding biology. 
+- 2016-03-17
+  * Discussion of a simulation experiment to assess the efficacy of AIC/BIC in recovering interaction terms.
 - 2016-03-10
   * The ASA's statement on p-values: context, process, and purpose [link](http://amstat.tandfonline.com/doi/abs/10.1080/00031305.2016.1154108). And don't forget the supplementary material that contains the individual views of the combatants.. um, I mean discussants.
 - 2016-03-03
