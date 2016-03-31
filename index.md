@@ -7,6 +7,8 @@ name: "GentleR"
 ## [About](About/).....[Links](Links/).....[Weasel](Weasel/)
 
 # Discussion material by date
+- 2016-03-31
+  * Discussion of utility of package mvabund for assessing species-species-environment interactions.
 - 2016-03-24
   * More model selection debate, a little on conditional inference trees, and some discussion of whale feeding biology. 
 - 2016-03-17
