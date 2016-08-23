@@ -7,6 +7,13 @@ name: "GentleR"
 ## [About](About/).....[Links](Links/).....[Weasel](Weasel/)
 
 # Discussion material by date
+- 2016-08-11
+* Discussion on MV analyses of K-Axis OTU data (Laurence C.), mvabund vs traditional approaches.
+* Discussion of correlated covariates in regression, VIFs and "what's all the fuss about anyway" (Rowan T.).
+- 2016-07-21
+* Discussion about estimating volume of electron microscope critters with missing data on key length measurements (Bruce G.)
+- 2016-05-26
+* Discussion about RStudio notebooks (pre-release versions only)
 - 2016-03-31
   * Discussion of the utility of package mvabund for assessing species-species-environment interactions.
 - 2016-03-24
